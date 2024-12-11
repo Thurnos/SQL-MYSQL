@@ -1,0 +1,102 @@
+???JOINS
+
+1.Inner Join
+Returns only the rows where there is a match in both tables based on the 
+specified condition.
+
+2.Left Join
+Returns all rows from the left table (table1), and the matched rows from the 
+right table (table2). If there is no match, NULL values are returned for columns 
+from the right table.
+
+3.Right Join
+Returns all rows from the right table (table2), and the matched rows from the 
+left table (table1). If there is no match, NULL values are returned for columns 
+from the left table.
+
+4.Full Join
+Returns all rows when there is a match in either the left or right table. 
+If there is no match, NULL values are returned for columns from the table without 
+a match.
+
+SELECT 
+    o.OrderID, 
+    c.CustomerName, 
+    s.ShipperName
+FROM 
+    (Orders AS o
+    INNER JOIN Customers AS c 
+    ON o.CustomerID = c.CustomerID)
+    INNER JOIN Shippers AS s 
+    ON o.ShipperID = s.ShipperID;
+    
+    
+SELECT Orders.OrderID, Customers.CustomerName, Shippers.ShipperName
+FROM ((Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID)
+INNER JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID); 
+
+
+
+WHEN JOINING TABLES WE CAN REFER TO THEM AS OBJECTS LIKE 
+
+SELECT employees.name, departments.department_name
+FROM employees AS e
+INNER JOIN departments AS d ON e.department_id = d.department_id;
+
+
+
+
+SELECT TOP 4 * 
+FROM Products
+WHERE ProductID > 20 
+  AND ProductName  NOT LIKE '%a' -> '%a' return anything that ends with letter a
+  AND ProductName NOT LIKE 'G%' -> 'G%' return anything that starts with letter G
+ORDER BY SupplierID DESC;
+
+Difference between select top 4 and limit 4 is that limit 4 will return only 4 rows of the table
+where TOP will return the first 4 rows that match the condition we have
+
+
+SELECT LastName as Name , EmployeeID
+FROM Employees
+WHERE LastName NOT LIKE '%A%' and LastName LIKE '%L%';
+%A% is a WildCard so it means select any name without a's inside 
+and %L% is selecting any name that has any l's in it
+
+
+
+SELECT City, MIN(CustomerName) AS Name
+FROM Customers
+WHERE CustomerName NOT LIKE 'A%' AND City LIKE '%L%'
+GROUP BY City
+ORDER BY City;
+
+Selecting Names that dont start with A and cities that dont have any L's in them
+GROUP BY sorts all of the city names to ensure there wont be more than one entry 
+for the same city name and then we sort them alpabetically 
+
+
+SELECT * FROM Products
+WHERE ProductID BETWEEN 10 AND 21
+AND Price IN (10,20,30);
+
+SELECT * FROM Products
+WHERE ProductName BETWEEN "Carnarvon Tigers" AND "Chef Anton's Cajun Seasoning"
+ORDER BY ProductName;
+
+
+SELECT CustomerName, Address + ', ' + PostalCode + ' ' + City + ', ' + Country AS Address
+FROM Customers; 
+->Concatenate Address , postalcode , city and coutry together into a single table
+
+
+SELECT COUNT(CustomerID), Country
+FROM Customers
+GROUP BY Country
+HAVING COUNT (CustomerID) > 4;
+
+Selects the count of people for each country 
+
+
+
